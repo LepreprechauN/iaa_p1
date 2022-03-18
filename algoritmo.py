@@ -42,12 +42,13 @@ def algoritmo_option_2 (data_set, learning_rate, init_model):
 
 def algoritmo_option_3():
 
+    return
 
 def main ():
 
     data_set = pandas.read_csv('dataset.csv')
 
-
+    print(data_set)
 
     period = 1000
     init_model, model = [], []
