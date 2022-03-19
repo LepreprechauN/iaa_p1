@@ -1,10 +1,22 @@
 import pandas
+import turicreate as tc
 import random
+
+
+def turi_algoritmo():
+
+    modelo = []
+
+
+    return modelo
+
+
 
 
 
 def main ():
 
+    #cargamos dataset
     data_set = pandas.read_csv('dataset.csv')
 
     print(data_set)
