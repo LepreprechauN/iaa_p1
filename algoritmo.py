@@ -49,16 +49,16 @@ def algoritmo_option_3 (data_set, learning_rate, init_model):
             #p > ^p
         if data[2] > point_estimation(init_model, data):
             for i in range(2):
-                aux_model[i] += (learning_rate * data[i])
+                aux_model[i] += (learning_rate * data[i] * average_model)
 
-            aux_model[len(aux_model)-1] += learning_rate
+            aux_model[len(aux_model)-1] += learning_rate * average_model
 
             #p < ^p
         elif data[2] < point_estimation(init_model, data):
             for i in range(2):
-                aux_model[i] -= (learning_rate * data[i])
+                aux_model[i] -= (learning_rate * data[i] * average_model)
 
-            aux_model[len(aux_model)-1] -= learning_rate
+            aux_model[len(aux_model)-1] -= learning_rate * average_model
 
     return aux_model
 
