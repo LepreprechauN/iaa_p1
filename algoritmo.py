@@ -40,9 +40,27 @@ def algoritmo_option_2 (data_set, learning_rate, init_model):
     return aux_model
 
 
-def algoritmo_option_3():
+def algoritmo_option_3 (data_set, learning_rate, init_model):
 
-    return
+    aux_model = init_model.copy()
+    average_model = 1/len(data_set)
+
+    for data in data_set:
+            #p > ^p
+        if data[2] > point_estimation(init_model, data):
+            for i in range(2):
+                aux_model[i] += (learning_rate * data[i])
+
+            aux_model[len(aux_model)-1] += learning_rate
+
+            #p < ^p
+        elif data[2] < point_estimation(init_model, data):
+            for i in range(2):
+                aux_model[i] -= (learning_rate * data[i])
+
+            aux_model[len(aux_model)-1] -= learning_rate
+
+    return aux_model
 
 def main ():
 
@@ -65,6 +83,8 @@ def main ():
 
     for i in range(period):
         model = algoritmo_option_3(data_set.values.tolist(), 0.1, model)
+
+    print(model)
 
 
 if __name__ == '__main__':
