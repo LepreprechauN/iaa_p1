@@ -9,6 +9,9 @@ def point_estimation(model, point):
 
     suma = 0.0
 
+    print(model)
+    print(point)
+
     for i in range(len(model) - 1):
         suma += model[i] * point[i]
 
@@ -67,12 +70,33 @@ def algoritmo_option_3 (data_set, learning_rate, init_model):
 
 def main ():
 
+
+    print('¿Qué modelo quieres?: ')
+    print('1. Modelo 2')
+    print("2. Modelo 3")
+    option_model = int(input())
+
+
+
+    print("¿Qué tipo de regularización quieres?: ")
+    print("1. L1")
+    print("2. L2")
+    option_regularization = int(input())
+
+    print("¿Qué tipo de error quieres?")
+    print("1. Error absoluto")
+    print("2. Error cuadrático")
+    print("3. Error absoluto medio")
+    print("4. Error cuadratico medio")
+    option_error = int(input())
+
+
     data_set = pandas.read_csv('dataset.csv')
 
     print(data_set)
 
     alpha = 1
-    error_abs = 0.0
+    error_res = 0.0
     suma_L1, suma_L2 = 0.0, 0.0
     period = 1000
     init_model, model = [], []
@@ -82,55 +106,37 @@ def main ():
 
     model = init_model.copy()
 
-    for i in range (period):
-        model = algoritmo_option_2(data_set.values.tolist(), 0.1, model)
-        error_abs, suma_L1 = 0.0, 0.0
 
-        for data in data_set:
-            for x in range(2):
-                error_abs += abs(data[x] * model[x])
-            error_abs += abs(data[len(data)-1])
+    if(option_model == 1):
+        for i in range(period):
+            model = algoritmo_option_2(data_set.values.tolist(), 0.1, model)
 
-        for j in range(len(model) - 1):
+    if(option_model == 2):
+        for i in range(period):
+            model = algoritmo_option_3(data_set.values.tolist(), 0.1, model)
 
-            suma_L1 += abs(model[j])
-            suma_L2 += math.pow(model[j], 2)
+    error_res, suma_L = 0.0, 0.0
 
+    for data in data_set.values.tolist():
+        #Switch segun tipo de error elegido
 
-        error_abs += (alpha * suma_L1)
+        if(option_error == 1):
+            print(type(data))
+            error_res += abs(point_estimation(model, data) - data[len(data) - 1])
 
+        if(option_error == 2):
+            error_res += math.pow(point_estimation(model, data) - data[len(data) - 1], 2)
 
+    for j in range(len(model) - 1):
+        if(option_regularization == 1):
+            suma_L += abs(model[j])
+            error_res += (alpha * suma_L)
 
+        elif(option_regularization ==2):
+            suma_L += math.pow(model[j], 2)
+            error_res += (alpha * suma_L)
 
-
-
-
-
-        for j in range(len(model) - 1):
-
-
-
-
-
-            suma_L1 += abs(model[j])
-            suma_L2 += math.pow(model[j], 2)
-
-
-    print('Modelo 2: ', model)
-    print('L1: ', suma_L1)
-    print('L2', suma_L2)
-
-    suma_L1, suma_L2 = 0.0, 0.0
-
-    for i in range(period):
-        model = algoritmo_option_3(data_set.values.tolist(), 0.1, model)
-        for j in range(len(model) - 1):
-                suma_L1 += abs(model[j])
-                suma_L2 += math.pow(model[j], 2)
-
-    print('Modelo 3: ', model)
-    print('L1: ', suma_L1)
-    print('L2', suma_L2)
+    print('Error: ', error_res)
 
 
 if __name__ == '__main__':
