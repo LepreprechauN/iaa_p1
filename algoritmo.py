@@ -127,6 +127,15 @@ def main ():
         if(option_error == 2):
             error_res += math.pow(point_estimation(model, data) - data[len(data) - 1], 2)
 
+        if (option_error == 3):
+            error_res += abs(point_estimation(model, data) - data[len(data) - 1])
+            error_res /= (len(model) - 1)
+
+        if (option_error == 4):
+            error_res += math.pow(point_estimation(model, data) - data[len(data) - 1], 2)
+            error_res /= (len(model) - 1)
+            error_res = math.sqrt(error_res)
+
     for j in range(len(model) - 1):
         if(option_regularization == 1):
             suma_L += abs(model[j])
