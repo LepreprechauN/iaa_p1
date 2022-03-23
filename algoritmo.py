@@ -38,9 +38,6 @@ def algoritmo_option_2 (data_set, learning_rate, init_model):
         aux_model[len(aux_model)-1] += (learning_rate * error_diff * average_model)
 
 
-
-
-
     return aux_model
 
 
