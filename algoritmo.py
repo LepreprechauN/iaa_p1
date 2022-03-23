@@ -9,8 +9,6 @@ def point_estimation(model, point):
 
     suma = 0.0
 
-    print(model)
-    print(point)
 
     for i in range(len(model) - 1):
         suma += model[i] * point[i]
@@ -91,9 +89,18 @@ def main ():
     option_error = int(input())
 
 
-    data_set = pandas.read_csv('dataset.csv')
+# function for first dataset
+ #   data_set = pandas.read_csv('dataset.csv')
+    #esto lo usamos para el dataset de las casas, ya que da fallo al leer las columnas como cadenas
+    data_set = pandas.read_csv('Hyderabad.csv')
+    locations = data_set['Location'].unique()
+    location_dict = {}
 
-    print(data_set)
+    for i in range(len(locations)):
+        location_dict.update({locations[i] : i})
+    data_set['Location'] = data_set['Location'].map(location_dict)
+
+
 
     alpha = 1
     error_res = 0.0
@@ -121,7 +128,6 @@ def main ():
         #Switch segun tipo de error elegido
 
         if(option_error == 1):
-            print(type(data))
             error_res += abs(point_estimation(model, data) - data[len(data) - 1])
 
         if(option_error == 2):
